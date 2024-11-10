@@ -348,6 +348,7 @@ Nâng cấp mã của ứng dụng này để cho phép Tính chỉ số BMI tr�
         </form>
         <p id="nameResponse"></p>
     </section>
+    <section>
         <h2>Tính chỉ số BMI</h2>
         <form id="bmiForm">
             <label for="height">Chiều cao (cm):</label>
