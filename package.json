@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "prestart": "powershell -Command \"if (Get-NetTCPConnection -LocalPort 3000) { Stop-Process -Id (Get-NetTCPConnection -LocalPort 3000).OwningProcess -Force }\"",
+    "prestart": "node scripts/prestart.js",
     "start": "node src/app.js",
     "test": "jest",
     "cypress:run": "npx wait-on http://localhost:3000 && cypress run",
