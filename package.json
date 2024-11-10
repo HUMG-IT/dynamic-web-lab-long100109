@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "prestart": "node scripts/prestart.js",
+    "prestart": "node public/js/prestart.js",
     "start": "node src/app.js",
     "test": "jest",
     "cypress:run": "npx wait-on http://localhost:3000 && cypress run",
