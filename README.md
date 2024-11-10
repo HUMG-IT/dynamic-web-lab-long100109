@@ -325,30 +325,32 @@ Nếu hiện phiên bản mà không báo lỗi thì đã cài đặt thành cô
 Nâng cấp mã của ứng dụng này để cho phép Tính chỉ số BMI trực tuyến.
 - `public/index.html`:
 
-
-  ```html
+```html
   <!DOCTYPE html>
-<html lang="en">
+  <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ứng dụng Web động - Lưu Tên và Tính BMI</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Ứng dụng Web động - Lưu Tên và Tính BMI</title>
+      <link rel="stylesheet" href="css/style.css">
+  </head>
 
-<body>
-    <h1>Ứng dụng Web động với Node.js và Express</h1>
-    <section>
-        <h2>Lưu tên</h2>
-        <form id="nameForm">
-            <label for="name">Tên:</label>
-            <input type="text" id="name" name="name" required>
-            <button type="submit">Gửi tên</button>
-        </form>
-        <p id="nameResponse"></p>
-    </section>
-    <section>
+  <body>
+      <h1>Ứng dụng Web động với Node.js và Express</h1>
+
+      <!-- Form Lưu Tên -->
+      <section>
+          <h2>Lưu tên</h2>
+          <form id="nameForm">
+              <label for="name">Tên:</label>
+              <input type="text" id="name" name="name" required>
+              <button type="submit">Gửi tên</button>
+          </form>
+          <p id="nameResponse"></p>
+      </section>
+      <!-- Form Tính BMI -->
+      <section>
         <h2>Tính chỉ số BMI</h2>
         <form id="bmiForm">
             <label for="height">Chiều cao (cm):</label>
@@ -358,12 +360,12 @@ Nâng cấp mã của ứng dụng này để cho phép Tính chỉ số BMI tr�
             <button type="submit">Tính BMI</button>
         </form>
         <p id="bmiResult"></p>
-    </section>
-    <script src="js/script.js"></script>
-</body>
+      </section>
+      <script src="js/script.js"></script>
+  </body>
 
-</html>
-```
+  </html>
+  ```
 
 
 - `public/js/script.js`:
