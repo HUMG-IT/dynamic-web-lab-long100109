@@ -16,10 +16,10 @@ jobs:
       - name: Tải mã nguồn từ GitHub về môi trường làm việc
         uses: actions/checkout@v3
 
-      - name: Cài đặt môi trường Node.js với phiên bản 18
+      - name: Cài đặt môi trường Node.js với phiên bản 22
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '22'
 
       - name: Cài đặt tất cả các thư viện được liệt kê trong package.json
         run: npm install

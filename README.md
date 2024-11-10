@@ -40,7 +40,9 @@ Một cấu trúc thư mục tối ưu để dễ dàng mở rộng và bảo tr
   ```
 
 ## Các bước thực hiện
+
 ### Bước 1: Cài đặt Node.js và Express
+
 1. Cài đặt Node.js
 - Truy cập vào trang [node.js](https://nodejs.org), tải và cài đặt phiên bản LTS
 - Kiểm tra cài đặt bằng cách sử dụng terminal và nhập lệnh
@@ -53,6 +55,7 @@ Nếu hiện phiên bản mà không báo lỗi thì đã cài đặt thành cô
   <img
   src="screenshots/npm.png" alt="">
 </figure>
+
 2. Khởi tạo dự án và cài đặt các thư viện cần thiết
   ```bash
   npm init -y
@@ -68,6 +71,7 @@ Nếu hiện phiên bản mà không báo lỗi thì đã cài đặt thành cô
   ```
 
 3. Cấu hình `package.json` để thêm `jest` và các lệnh kiểm thử:
+  
   ```json
   {
   "name": "dynamic_web_lab",
@@ -102,9 +106,11 @@ Nếu hiện phiên bản mà không báo lỗi thì đã cài đặt thành cô
 
   ```
 
+
 ### Bước 2: Tạo server backend và frontend đơn giản
 1. Tạo `server` với `Express`
 - Tạo tệp `src/app.js` với nội dung:
+
   ```js
   const express = require('express');
   const path = require('path');
@@ -125,8 +131,12 @@ Nếu hiện phiên bản mà không báo lỗi thì đã cài đặt thành cô
       console.log(`Truy cập vào http://localhost:${port} để xem ứng dụng`);
   });
   ```
+
+
 2. Cấu hình các `route` và logic xử lý
 - Tạo `src/routes/api.js` để định nghĩa các route:
+
+
   ```js
   const express = require('express');
   const router = express.Router();
@@ -137,7 +147,11 @@ Nếu hiện phiên bản mà không báo lỗi thì đã cài đặt thành cô
 
   module.exports = router;
   ```
+
+
 - Tạo `src/controllers/nameController.js` để xử lý logic cho route `/submit`:
+
+
   ```js
   const names = require('../models/names');
 
@@ -149,7 +163,11 @@ Nếu hiện phiên bản mà không báo lỗi thì đã cài đặt thành cô
 
   module.exports = { submitName };
   ```
+
+
 - Tạo `src/models/names.js` để quản lý dữ liệu tên:
+
+
   ```js
   const names = [];
 
@@ -164,8 +182,11 @@ Nếu hiện phiên bản mà không báo lỗi thì đã cài đặt thành cô
   module.exports = { addName, getNames };
   ```
 
+
 3. Tạo giao diện `frontend` với HTML/CSS/JavaScript
 - Tạo tệp `public/index.html`:
+
+
   ```html
   <!DOCTYPE html>
   <html lang="en">
@@ -199,7 +220,11 @@ Nếu hiện phiên bản mà không báo lỗi thì đã cài đặt thành cô
 
   </html>
   ```
+
+
 - Tạo tệp `public/css/style.css`:
+
+
   ```css
   body {
     font-family: Arial, sans-serif;
@@ -214,7 +239,11 @@ Nếu hiện phiên bản mà không báo lỗi thì đã cài đặt thành cô
     margin: 5px;
   }
   ```
+
+
 - Tạo tệp `public/js/script.js`:
+
+
   ```js
   document.getElementById('nameForm').addEventListener('submit', async function (e) {
       // Ngăn hành vi mặc định của form (ngăn tải lại trang)
@@ -239,8 +268,12 @@ Nếu hiện phiên bản mà không báo lỗi thì đã cài đặt thành cô
       document.getElementById('nameResponse').textContent = data.message;
   });
   ```
+
+
 ### Bước 3: Kiểm thử với Jest và Supertest
 - Tạo tệp `test/app.test.js`:
+
+
   ```js
   const request = require('supertest');
   const express = require('express');
@@ -268,19 +301,31 @@ Nếu hiện phiên bản mà không báo lỗi thì đã cài đặt thành cô
       });
   });
   ```
+
+
 - Chạy kiểm thử:
+
+
   ```bash
   npm test
   ```
+
+
 - Khởi chạy server bằng cách chạy lệnh
+
+
   ```bash
   npm start
   ```
+
+
 - Truy cập vào http://localhost:3000 để xem ứng dụng
 
 ### Bước 4: Mở rộng ứng dụng
 Nâng cấp mã của ứng dụng này để cho phép Tính chỉ số BMI trực tuyến.
 - `public/index.html`:
+
+
   ```html
   <!DOCTYPE html>
 <html lang="en">
@@ -318,7 +363,11 @@ Nâng cấp mã của ứng dụng này để cho phép Tính chỉ số BMI tr�
 
 </html>
 ```
+
+
 - `public/js/script.js`:
+
+
 ```js
 // Form lưu tên
 document.getElementById('nameForm').addEventListener('submit', async function (e) {
@@ -369,7 +418,11 @@ document.getElementById('bmiForm').addEventListener('submit', async function (e)
     document.getElementById('bmiResult').textContent = `BMI của bạn là: ${data.bmi}, Phân loại: ${data.classification}`;
 });
 ```
+
+
 - `src/controllers/bmiController.js`
+
+
 ```js
 // Import các hàm calculateBMI và classifyBMI từ bmi.js
 const { calculateBMI, classifyBMI } = require('../models/bmi');  // Đảm bảo đường dẫn đúng với tệp bmi.js
@@ -392,7 +445,11 @@ const getBMI = (req, res) => {
 module.exports = { getBMI };
 ```
 
+
+
 - `src/models/bmi.js`:
+
+
 ```js
 function calculateBMI(weight, height) {
     const bmi = weight / ((height / 100) ** 2);
@@ -414,7 +471,11 @@ module.exports = {
     classifyBMI
 };
 ```
+
+
 - `src/routes/api.js`:
+
+
 ```js
 const express = require('express');
 const router = express.Router();
@@ -424,7 +485,11 @@ router.post('/submit', submitName);
 router.post('/bmi', getBMI);
 module.exports = router;
 ```
+
+
 - `test/app.test.js`:
+
+
 ```js
 const request = require('supertest');
 const express = require('express');
@@ -495,46 +560,76 @@ describe('Kiểm thử POST /api/v1/bmi', () => {
   });
 });
 ```
+
+
 #### Khi giao nộp
 - Sau khi viết xong ứng dụng, hãy thực hiện kiểm tra bằng cách thực thi ứng dụng:
 - Khởi chạy server bằng cách chạy lệnh
+
+
   ```bash
   npm start
   ```
+
+
 - Truy cập vào http://localhost:3000 để xem ứng dụng.
+
+
 <figure>
   <img
   src="screenshots/BMI.png" alt="Giao diện của ứng dụng web.">
   <center><figcaption>Giao diện của ứng dụng</figcaption></center>
 </figure>
+
+
 - Thực hiện kiểm thử đơn vị bằng Jest:
+
+
   ```bash
   npm test
   ```
+
+
 <figure>
   <img
   src="screenshots/test.png" alt="">
 </figure>
+
+
 - Thực hiện kiểm thử bằng Cypress:
+
+
   ```bash
   npm run start & npm run cypress:run
   ```
+
+
 <figure>
   <img
   src="screenshots/cpress1.png" alt="">
 </figure>
+
+
 <figure>
   <img
   src="screenshots/cypress2.png" alt="">
 </figure>
+
+
 - Thực hiện kiểm thử bằng Selenium:
+
+
   ```bash
   node test/selenium_test.js
   ```  
+
+
 <figure>
   <img
   src="screenshots/selenium.png" alt="">
 </figure>
+
+
 ### Giao nộp
 - Chạy thử ứng dụng: Đảm bảo rằng ứng dụng hiển thị đúng như mong muốn.
 - Kiểm thử ứng dụng: Đảm bảo rằng ứng dụng hoàn thành các chức năng yêu cầu
