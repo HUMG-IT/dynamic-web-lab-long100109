@@ -2,25 +2,6 @@
 [![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-2e0aaae1b6195c2367325f4f02e2d04e9abb55f0b24a779b69b11b9e10269abc.svg)](https://classroom.github.com/online_ide?assignment_repo_id=16901835&assignment_repo_type=AssignmentRepo)
 # Dynamic Web Lab
 
-## Mục tiêu
-- Hiểu và sử dụng các khái niệm cơ bản về ứng dụng web động.
-- Tạo giao diện đơn giản bằng HTML, CSS, và JavaScript.
-- Xây dựng server cơ bản với Node.js và Express.
-- Kết hợp form với logic xử lý và phản hồi từ server.
-- Nắm vững các khái niệm và kỹ năng cơ bản về kiểm thử tự động, bao gồm:
-  - **Kiểm thử đơn vị**: Đảm bảo các phần nhỏ của mã nguồn hoạt động đúng như mong đợi.
-  - **Kiểm thử tích hợp**: Xác minh khả năng tương tác giữa các thành phần trong hệ thống.
-  - **Kiểm thử End-to-End (E2E)**: Đảm bảo chức năng ứng dụng hoạt động đầy đủ từ đầu đến cuối qua giao diện người dùng.
-
-<figure>
-  <img
-  src="screenshots/ui.png" alt="Giao diện của ứng dụng web.">
-  <center><figcaption>Giao diện mong đợi của ứng dụng</figcaption></center>
-</figure>
-
-## Điều kiện tiên quyết
-- Visual Studio Code và Node.js
-- Tham khảo video [https://youtu.be/6OsJwK1_Ajs](https://youtu.be/6OsJwK1_Ajs)
 
 ## Cấu trúc thư mục
 Một cấu trúc thư mục tối ưu để dễ dàng mở rộng và bảo trì:
@@ -68,7 +49,10 @@ Một cấu trúc thư mục tối ưu để dễ dàng mở rộng và bảo tr
   npm -v
   ```
 Nếu hiện phiên bản mà không báo lỗi thì đã cài đặt thành công. Lúc này bạn có thể tiến hành các bước tiếp theo.
-
+<figure>
+  <img
+  src="screenshots/npm.png" alt="">
+</figure>
 2. Khởi tạo dự án và cài đặt các thư viện cần thiết
   ```bash
   npm init -y
@@ -86,32 +70,36 @@ Nếu hiện phiên bản mà không báo lỗi thì đã cài đặt thành cô
 3. Cấu hình `package.json` để thêm `jest` và các lệnh kiểm thử:
   ```json
   {
-    "name": "dynamic_web_lab",
-    "version": "1.0.0",
-    "description": "Làm quen với ứng dụng web động",
-    "main": "index.js",
-    "scripts": {
-      "prestart": "lsof -i :3000 | grep LISTEN | awk '{print $2}' | xargs kill -9 || true",
-      "start": "node src/app.js",
-      "test": "jest",
-      "cypress:run": "npx wait-on http://localhost:3000 && cypress run",
-      "test:e2e": "npm run start & npm run cypress:run"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-      "chromedriver": "^130.0.2",
-      "express": "^4.21.1",
-      "selenium-webdriver": "^4.26.0"
-    },
-    "devDependencies": {
-      "cypress": "^13.15.1",
-      "jest": "^29.7.0",
-      "supertest": "^7.0.0",
-      "wait-on": "^8.0.1"
-    }
+  "name": "dynamic_web_lab",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "powershell -Command \"if (Get-NetTCPConnection -LocalPort 3000) { Stop-Process -Id (Get-NetTCPConnection -LocalPort 3000).OwningProcess -Force }\"",
+    "start": "node src/app.js",
+    "test": "jest",
+    "cypress:run": "npx wait-on http://localhost:3000 && cypress run",
+    "test:e2e": "npm run start & npm run cypress:run"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "Làm quen với ứng dụng web động",
+  "dependencies": {
+    "chromedriver": "^130.0.2",
+    "express": "^4.21.1",
+    "selenium-webdriver": "^4.26.0"
+  },
+  "devDependencies": {
+    "cypress": "^13.15.2",
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0",
+    "wait-on": "^8.0.1"
+  },
+  "directories": {
+    "test": "test"
   }
+}
+
   ```
 
 ### Bước 2: Tạo server backend và frontend đơn giản
@@ -292,31 +280,261 @@ Nếu hiện phiên bản mà không báo lỗi thì đã cài đặt thành cô
 
 ### Bước 4: Mở rộng ứng dụng
 Nâng cấp mã của ứng dụng này để cho phép Tính chỉ số BMI trực tuyến.
+- `public/index.html`:
+  ```html
+  <!DOCTYPE html>
+<html lang="en">
 
-#### Gợi ý cách thực hiện
-1. **Frontend**: Bổ sung form Tính chỉ số BMI (cho phép nhập chiều cao, cân nặng) và gửi dữ liệu này đến server.
-2. **Backend**: Tính toán chỉ số BMI dựa trên dữ liệu từ frontend, phân loại kết quả và gửi lại phản hồi là chỉ số BMI cùng với phân loại.
-3. **Lưu ý**: Tham khảo cấu trúc thư mục và tệp tin cùng giao diện mong đợi của ứng dụng ở trên. Các tệp cần bổ sung và cập nhật bao gồm `public/index.html`, `public/js/script.js`, `src/controllers/bmiController.js`, `src/models/bmi.js`, `src/routes/api.js`
-#### Chuẩn bị trước khi giao nộp
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ứng dụng Web động - Lưu Tên và Tính BMI</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <h1>Ứng dụng Web động với Node.js và Express</h1>
+    <section>
+        <h2>Lưu tên</h2>
+        <form id="nameForm">
+            <label for="name">Tên:</label>
+            <input type="text" id="name" name="name" required>
+            <button type="submit">Gửi tên</button>
+        </form>
+        <p id="nameResponse"></p>
+    </section>
+        <h2>Tính chỉ số BMI</h2>
+        <form id="bmiForm">
+            <label for="height">Chiều cao (cm):</label>
+            <input type="number" id="height" name="height" required>
+            <label for="weight">Cân nặng (kg):</label>
+            <input type="number" id="weight" name="weight" required>
+            <button type="submit">Tính BMI</button>
+        </form>
+        <p id="bmiResult"></p>
+    </section>
+    <script src="js/script.js"></script>
+</body>
+
+</html>
+```
+- `public/js/script.js`:
+```js
+// Form lưu tên
+document.getElementById('nameForm').addEventListener('submit', async function (e) {
+    // Ngăn hành vi mặc định của form (ngăn tải lại trang)
+    e.preventDefault();
+
+    // Lấy giá trị nhập từ trường input có id là 'name'
+    const name = document.getElementById('name').value;
+
+    // Gửi yêu cầu POST đến server tại route '/submit' với dữ liệu JSON
+    const response = await fetch('/api/v1/submit', {
+        method: 'POST',  // Sử dụng phương thức POST để gửi dữ liệu
+        headers: {
+            'Content-Type': 'application/json',  // Định nghĩa kiểu nội dung gửi là JSON
+        },
+        body: JSON.stringify({ name: name }),  // Chuyển đổi đối tượng { name: name } thành chuỗi JSON
+    });
+
+    // Chờ phản hồi từ server và chuyển đổi phản hồi từ JSON thành đối tượng JavaScript
+    const data = await response.json();
+
+    // Hiển thị thông điệp trả về từ server trong phần tử có id là 'nameResponse'
+    document.getElementById('nameResponse').textContent = `${data.message}. Danh sách tên: ${data.names.join(', ')}`;
+});
+
+// Form tính BMI
+document.getElementById('bmiForm').addEventListener('submit', async function (e) {
+    // Ngăn hành vi mặc định của form (ngăn tải lại trang)
+    e.preventDefault();
+
+    // Lấy giá trị chiều cao, cân nặng nhập từ form
+    const height = parseFloat(document.getElementById('height').value);
+    const weight = parseFloat(document.getElementById('weight').value);
+
+    // Gửi yêu cầu POST đến server tại route '/bmi' với dữ liệu JSON
+    const response = await fetch('/api/v1/bmi', {
+        method: 'POST',  // Sử dụng phương thức POST để gửi dữ liệu
+        headers: {
+            'Content-Type': 'application/json',  // Định nghĩa kiểu nội dung gửi là JSON
+        },
+        body: JSON.stringify({ height, weight }),  // Chuyển đổi đối tượng thành chuỗi JSON
+    });
+
+    // Chờ phản hồi từ server và chuyển đổi phản hồi từ JSON thành đối tượng JavaScript
+    const data = await response.json();
+
+    // Hiển thị thông điệp trả về từ server trong phần tử có id là 'bmiResult'
+    document.getElementById('bmiResult').textContent = `BMI của bạn là: ${data.bmi}, Phân loại: ${data.classification}`;
+});
+```
+- `src/controllers/bmiController.js`
+```js
+// Import các hàm calculateBMI và classifyBMI từ bmi.js
+const { calculateBMI, classifyBMI } = require('../models/bmi');  // Đảm bảo đường dẫn đúng với tệp bmi.js
+
+// Hàm getBMI xử lý yêu cầu từ client
+const getBMI = (req, res) => {
+    const { weight, height } = req.body;  // Lấy cân nặng và chiều cao từ request body
+
+    // Tính toán BMI
+    const bmi = calculateBMI(weight, height);
+    
+    // Phân loại BMI
+    const classification = classifyBMI(bmi);
+    
+    // Trả về JSON chứa bmi và classification
+    res.json({ bmi, classification });
+};
+
+// Xuất hàm getBMI
+module.exports = { getBMI };
+```
+
+- `src/models/bmi.js`:
+```js
+function calculateBMI(weight, height) {
+    const bmi = weight / ((height / 100) ** 2);
+    return parseFloat(bmi.toFixed(2));
+}
+function classifyBMI(bmi) {
+    if (bmi < 18.5) {
+        return "Gầy";
+    } else if (bmi >= 18.5 && bmi <= 24.9) {
+        return "Bình thường";
+    } else if (bmi >= 25 && bmi <= 29.9) {
+        return "Thừa cân";
+    } else {
+        return "Béo phì";
+    }
+}
+module.exports = {
+    calculateBMI,
+    classifyBMI
+};
+```
+- `src/routes/api.js`:
+```js
+const express = require('express');
+const router = express.Router();
+const { submitName } = require('../controllers/nameController');
+const { getBMI } = require('../controllers/bmiController');
+router.post('/submit', submitName);
+router.post('/bmi', getBMI);
+module.exports = router;
+```
+- `test/app.test.js`:
+```js
+const request = require('supertest');
+const express = require('express');
+
+const app = express();
+app.use(express.json());
+
+// Định nghĩa route và logic kiểm thử cho ứng dụng
+const names = [];
+app.post('/api/v1/submit', (req, res) => {
+  const name = req.body.name;
+  names.push(name);
+  res.json({ message: `Xin chào, ${name}!`, names });
+});
+
+describe('Kiểm thử POST /api/v1/submit', () => {
+  it('trả về lời chào và cập nhật mảng tên', async () => {
+    const res = await request(app)
+      .post('/api/v1/submit')
+      .send({ name: 'John' });
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toHaveProperty('message', 'Xin chào, John!');
+    expect(res.body.names).toContain('John');
+  });
+});
+
+// Import các model và controller cho BMI
+const { calculateBMI, classifyBMI } = require('../src/models/bmi');
+app.post('/api/v1/bmi', (req, res) => {
+  const { weight, height } = req.body;
+  const bmi = calculateBMI(weight, height);
+  const classification = classifyBMI(bmi);
+  res.json({ bmi, classification });
+});
+
+describe('Kiểm thử POST /api/v1/bmi', () => {
+  it('tính chỉ số BMI và trả về phân loại "Bình thường" cho cân nặng 60kg và chiều cao 165cm', async () => {
+    const res = await request(app)
+      .post('/api/v1/bmi')
+      .send({ weight: 60, height: 165 });
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toHaveProperty('bmi');
+    expect(res.body).toHaveProperty('classification', 'Bình thường');
+  });
+
+  it('phân loại là "Gầy" cho BMI thấp', async () => {
+    const res = await request(app)
+      .post('/api/v1/bmi')
+      .send({ weight: 45, height: 165 });
+    expect(res.statusCode).toEqual(200);
+    expect(res.body.classification).toBe('Gầy');
+  });
+
+  it('phân loại là "Thừa cân" cho BMI cao hơn', async () => {
+    const res = await request(app)
+      .post('/api/v1/bmi')
+      .send({ weight: 75, height: 165 });
+    expect(res.statusCode).toEqual(200);
+    expect(res.body.classification).toBe('Thừa cân');
+  });
+
+  it('phân loại là "Béo phì" cho BMI rất cao', async () => {
+    const res = await request(app)
+      .post('/api/v1/bmi')
+      .send({ weight: 90, height: 165 });
+    expect(res.statusCode).toEqual(200);
+    expect(res.body.classification).toBe('Béo phì');
+  });
+});
+```
+#### Khi giao nộp
 - Sau khi viết xong ứng dụng, hãy thực hiện kiểm tra bằng cách thực thi ứng dụng:
 - Khởi chạy server bằng cách chạy lệnh
   ```bash
   npm start
   ```
-- Truy cập vào http://localhost:3000 để xem ứng dụng, đảm bảo ứng dụng trông như mong đợi ở hình ảnh phía trên.
+- Truy cập vào http://localhost:3000 để xem ứng dụng.
+<figure>
+  <img
+  src="screenshots/BMI.png" alt="Giao diện của ứng dụng web.">
+  <center><figcaption>Giao diện của ứng dụng</figcaption></center>
+</figure>
 - Thực hiện kiểm thử đơn vị bằng Jest:
   ```bash
   npm test
   ```
+<figure>
+  <img
+  src="screenshots/test.png" alt="">
+</figure>
 - Thực hiện kiểm thử bằng Cypress:
   ```bash
   npm run start & npm run cypress:run
   ```
+<figure>
+  <img
+  src="screenshots/cpress1.png" alt="">
+</figure>
+<figure>
+  <img
+  src="screenshots/cypress2.png" alt="">
+</figure>
 - Thực hiện kiểm thử bằng Selenium:
   ```bash
   node test/selenium_test.js
-  ```
-  
+  ```  
+<figure>
+  <img
+  src="screenshots/selenium.png" alt="">
+</figure>
 ### Giao nộp
 - Chạy thử ứng dụng: Đảm bảo rằng ứng dụng hiển thị đúng như mong muốn.
 - Kiểm thử ứng dụng: Đảm bảo rằng ứng dụng hoàn thành các chức năng yêu cầu
